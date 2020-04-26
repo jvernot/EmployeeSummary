@@ -15,8 +15,6 @@ class Employee {
 
     getRole = () => this.role;
     
-
 }
 
-console.log(this.role);
 module.exports = Employee;
