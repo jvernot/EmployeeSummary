@@ -14,7 +14,7 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-defineEmployee: [
+const defineEmployee= [
     {
         type: 'list',
         message: 'Enter Personnel:',
@@ -23,15 +23,15 @@ defineEmployee: [
     }
 ];
 
-employeeQuestions: [
+const employeeQuestions = [
     {
         type: "input",
-        message: "What is your name?",
+        message: "Name?",
         name: "name"
     },
     {
         type: 'input',
-        message: 'Please enter your employee ID number:',
+        message: 'Please enter the employee ID number:',
         name: 'id',
     },
     {
@@ -41,7 +41,7 @@ employeeQuestions: [
     }
 ];
 
-managerQuestions: [
+const managerQuestions = [
     {
         type: 'input',
         message: 'Office Number',
@@ -49,7 +49,7 @@ managerQuestions: [
     }
 ];
 
-engineerQuestions: [
+const engineerQuestions = [
     {
         type: 'input',
         message: 'GitHub Username',
@@ -57,7 +57,7 @@ engineerQuestions: [
     }
 ];
 
-internQuestions: [
+const internQuestions = [
     {
         type: 'input',
         message: 'School',
@@ -65,8 +65,57 @@ internQuestions: [
     }
 ];
 
+const employeeArray = [];
 
+function init() {
+    inquirer
+    .prompt(employeeQuestions.concat(managerQuestions))
+    .then(({name, id, email, officeNumber}) => {
+        let manager = new Manager(name, id, officeNumber, email);
+        employeeArray.push(manager);
+        getEmployee();
+    })
+};
 
+function getEmployee() {
+    inquirer
+    .prompt(defineEmployee)
+    .then(({userChoice}) => {
+        switch (userChoice) {
+            case 'Engineer':
+                getEngineer();
+                break;
+            case 'Intern':
+                getIntern();
+                break;
+            case 'Complete':
+                render(employeeArray);
+                break;
+        }
+    })
+};
+
+function getEngineer() {
+    inquirer
+    .prompt(employeeQuestions.concat(engineerQuestions))
+    .then(({name, id, email, githubUsername}) => {
+        let engineer = new Engineer(name, id, githubUsername, email);
+        employeeArray.push(engineer);
+        getEmployee();
+    })
+};
+
+function getIntern() {
+    inquirer
+    .prompt(employeeQuestions.concat(internQuestions))
+    .then(({name, id, email, school}) => {
+        let intern = new Intern(name, id, school, email);
+        employeeArray.push(intern)
+        getEmployee();
+    })
+};
+
+init();
 
 
 
