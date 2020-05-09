@@ -39,7 +39,6 @@ To run tests, run the following command:
 
 npm test
 
-
 ## Questions
 
 If you have any questions about the repo, open an issue or contact jvernot directly at jason.vernot@gmail.com.
